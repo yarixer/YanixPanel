@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="100" viewBox="0 0 660 100" role="img" aria-label="Yanix">
+  <defs>
+    <!-- Icon gradient -->
+    <linearGradient id="iconGrad" x1="30" y1="20" x2="110" y2="85" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A855F7"/>
+      <stop offset="0.55" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+
+    <!-- Wordmark gradient recalculated for current word width (better on I/X) -->
+    <linearGradient id="wordGrad" x1="140" y1="0" x2="352" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B46CFF"/>
+      <stop offset="0.56" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+
+    <!-- Crescent mask (helmet) -->
+    <mask id="crescentMask" maskUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="660" height="100" fill="black"/>
+      <circle cx="70" cy="50" r="32" fill="white"/>
+      <circle cx="84" cy="44" r="26" fill="black"/>
+    </mask>
+
+    <!-- Glows -->
+    <filter id="neonGlow" x="-40%" y="-60%" width="180%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#A855F7" flood-opacity="0.75"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#22D3EE" flood-opacity="0.35"/>
+    </filter>
+
+    <filter id="wordGlowDark" x="-35%" y="-90%" width="170%" height="280%">
+      <feDropShadow dx="0" dy="0" stdDeviation="1.6" flood-color="#B46CFF" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="4.8" flood-color="#22D3EE" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- ICON (helmet crescent) - unchanged -->
+  <g filter="url(#neonGlow)">
+    <g mask="url(#crescentMask)">
+      <circle cx="70" cy="50" r="32" fill="url(#iconGrad)"/>
+      <path d="M52 38 C 58 28, 78 24, 88 34" fill="none" stroke="#E9D5FF" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <circle cx="70" cy="50" r="32" fill="none" stroke="url(#iconGrad)" stroke-width="1.6" opacity="0.9"/>
+    <circle cx="102" cy="30" r="1.8" fill="#67E8F9" opacity="0.9"/>
+    <circle cx="92" cy="22" r="1.1" fill="#C084FC" opacity="0.9"/>
+    <circle cx="108" cy="50" r="1.2" fill="#E9D5FF" opacity="0.7"/>
+  </g>
+
+  <!-- WORDMARK -->
+  <g filter="url(#wordGlowDark)" fill="none" stroke="url(#wordGrad)" stroke-linecap="round" stroke-linejoin="round" opacity="0.96">
+    <g stroke-width="9">
+      <!-- Y (fixed position) -->
+      <path d="M140 32 L162 52 L184 32"/>
+      <path d="M162 52 L162 70"/>
+
+      <!-- A -->
+      <path d="M202 70 L220 32 L238 70"/>
+      <path d="M209 54 H231"/>
+
+      <!-- N -->
+      <path d="M266 70 V32"/>
+      <path d="M266 32 L300 70"/>
+      <path d="M300 70 V32"/>
+
+      <!-- I (top squashed at y=40) -->
+      <path d="M328 40 H348"/>
+      <path d="M338 40 V70"/>
+      <path d="M328 70 H348"/>
+    </g>
+
+    <!-- X as "dot" above I -->
+    <g stroke-width="7">
+      <path d="M330 14 L346 30"/>
+      <path d="M346 14 L330 30"/>
+    </g>
+
+    <!-- underline -->
+    <path d="M132 84 H 360" stroke="#22D3EE" stroke-opacity="0.26" stroke-width="2"/>
+  </g>
+</svg>

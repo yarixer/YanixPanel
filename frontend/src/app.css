@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* Немного базовой стилизации фона и текста */
+body {
+  background-color: #020617; /* примерно bg-slate-950 */
+  color: #e5e7eb;            /* примерно text-slate-200 */
+}
+
+
+
+
+
+
+
+/* ===== Scrollbar styling (global) ===== */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.55) rgba(15, 23, 42, 0.9);
+}
+
+/* Chromium / Safari */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.9); /* slate-900-ish */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.45); /* cyan-400-ish */
+  border-radius: 999px;
+  border: 2px solid rgba(15, 23, 42, 0.9); /* makes it look inset */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.7);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(15, 23, 42, 0.9);
+}

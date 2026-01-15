@@ -1,0 +1,33 @@
+# env
+.env
+*.env
+*.env.*
+.env.*
+
+# node
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# build artifacts
+**/dist/
+**/.svelte-kit/
+**/build/
+**/.output/
+**/coverage/
+**/.turbo/
+**/.cache/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# runtime
+**/logs/
+**/*.log
+
+# generated frontend static
+backend/public/
