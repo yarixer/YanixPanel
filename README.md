@@ -9,7 +9,7 @@
 
 **Not supported (-i or -it):**
 
-* `docker exec -it <container> `
+* `docker exec -it <container>`
 
 
 
