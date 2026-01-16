@@ -1,7 +1,7 @@
 ![Yanix Panel](./.github/header.png)
 ## What is this?
 
-**Yanix Panel** is a lightweight web control panel for Docker containers, built on top of the **Docker API**. It lets you manage containers on the local host or on remote servers, and includes a web-based console, a file manager with archiver extraction, and two APIs for automation and integration. Command execution follows the docker exec model but interactive TTY sessions are not supported
+**Yanix Panel** is a lightweight web control panel for Docker containers, built on top of the **Docker API**. It lets you manage containers on the local host or on remote servers, and includes a web-based console, a file manager with archiver extraction, and two APIs for automation and integration. Command execution follows the docker exec model but interactive TTY sessions are not supported.
 
 **Supported:**
 
