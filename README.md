@@ -1,8 +1,16 @@
 ![Yanix Panel](./.github/header.png)
 ## What is this?
-**Yanix Panel** is a lightweight web control panel for Docker containers, built on top of the **Docker API** and designed to manage containers **locally or across multiple servers**. It includes an online console (non-interactive exec), a file manager with built-in archive extraction, and two APIs for automation and integration.
 
-**How it works:** container logs from instances labeled `com.yanix.role: "yanix-server"` are shipped via **Vector.dev** into **NATS JetStream** storage and then displayed in the web UI. Command execution follows the `docker exec` model and is highly flexible, but **interactive TTY sessions are not supported**—meaning `docker exec -it <container> ...` will not work. Non-interactive commands are supported, for example: `docker exec <container> rcon-cli stop`. This makes Yanix Panel especially suitable for managing **game and in-server workloads** where commands are executed via tools like RCON.
+**Yanix Panel** is a lightweight web control panel for Docker containers, built on top of the **Docker API**. It lets you manage containers on the local host or on remote servers, and includes a web-based console, a file manager with archiver extraction, and two APIs for automation and integration. Command execution follows the docker exec model but interactive TTY sessions are not supported
+
+**Supported:**
+
+* `docker exec <container> rcon-cli stop`
+
+**Not supported (-i or -it):**
+
+* `docker exec -it <container> rcon-cli`
+
 
 
 ## Requirements
