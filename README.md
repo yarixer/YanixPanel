@@ -5,11 +5,11 @@
 
 **Supported:**
 
-* `docker exec <container> rcon-cli stop`
+* `docker exec <container> <command>`
 
 **Not supported (-i or -it):**
 
-* `docker exec -it <container> rcon-cli`
+* `docker exec -it <container> `
 
 
 
