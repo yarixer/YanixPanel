@@ -1,4 +1,4 @@
-![Yanix Panel](./header.png)
+![Yanix Panel](./.github/header.png)
 
 ## Requirements
 
