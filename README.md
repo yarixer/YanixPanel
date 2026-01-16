@@ -1,159 +1,97 @@
-![Yanix Panel](./header.png)
-
-# Yanix — Web Panel for Docker Containers (Local & Remote)
-
-Yanix is a lightweight web panel that lets you manage Docker containers through a browser — including containers running on **other servers**. It’s designed for teams that want a simple “single pane of glass” for container operations and user management.
-
-> **Important:** Please **read this README fully from top to bottom** before running any commands. Some steps (MySQL + user verification) are required for a successful first login.
-
----
-
-## Key Features
-
-- Web UI for managing Docker containers
-- Ability to connect and manage containers on **multiple servers**
-- Admin zone for server registry and user management
-- Container discovery via **Docker labels** (simple integration with your existing `docker compose` stacks)
-
----
+Yanix is a self-hosted web control panel for managing Docker containers from a browser.  
+It can manage containers on the same host **and** on other servers by registering remote “Yanix Servers” in the admin area.
 
 ## Requirements
 
-### System
+- **Docker Engine v27+** (cgroup v2 required)
 - **OS:** Debian / Ubuntu
-- **Docker:** `v27+` (**cgroup v2 required**)
-- **MySQL:** `8.0+`
-- **acl package:** `sudo apt-get install acl`
-- Basic understanding of Docker and Docker Compose
-
-### Notes
-- Docker must be running with **cgroup v2** enabled.
-- Ensure ports are reachable as needed (see “Networking” below).
-
----
-
-## Networking
-
-Default components and ports:
-- **Web panel:** `http://<server-ip>:3001`
-- **API:** `http://yanix-api:8080` (typically internal to the Docker network)
-
-If you expose the panel publicly, use a firewall and/or a reverse proxy with TLS (recommended).
-
----
+- **MySQL 8.0+**
+- `acl` package (`apt-get install acl`)
+- Basic Docker knowledge
 
 ## Installation
 
-### Preparation (must be done first)
+> **Please read this section from start to finish before running any commands.**
 
-1. **Install MySQL 8.0+**
-2. **Create a database**
-3. **Create a MySQL user** with **full privileges** on that database  
-   Save these credentials — you will need them during setup.
-4. Install ACL if not installed:
+### Preparation stage
+
+1. Install **MySQL 8.0+**
+2. Create a **database**
+3. Create a **MySQL user** with **full privileges** on that database  
+   (save the database name, username, and password — you will need them)
+4. Install `acl` if not installed:
+
    ```bash
    sudo apt-get update
    sudo apt-get install -y acl
-````
+   ```
 
----
-
-### Step 1 — Download and run the installer
+### Step 1 — Run the installer
 
 1. Download `install.sh`
-2. Run:
+2. Make it executable and run it:
 
    ```bash
    chmod +x install.sh
    sudo ./install.sh
    ```
 
----
+### Step 2 — Start the Docker Compose stack
 
-### Step 2 — Start Yanix via Docker Compose
+1. Go to the Yanix core directory (startup files are stored here):
 
-After installation, the runtime files are located here:
+   ```bash
+   cd /var/yanix/core
+   ```
+2. If needed, edit the startup/config files in this directory.
+3. Start the stack:
 
-```bash
-cd /var/yanix/core
-```
+   ```bash
+   docker compose up -d
+   ```
+4. Wait until services are up.
 
-* This directory contains the launch/configuration files.
-* Review and edit configuration if needed, then start the stack:
+### Step 3 — Register and enable your admin user
 
-```bash
-docker compose up -d
-```
+1. Open the panel in your browser and register:
 
-Wait until containers are up and healthy.
+   ```
+   http://<server-ip>:3001
+   ```
 
-Tip for logs:
+2. Connect to MySQL, find the `User` table, then **verify** your user and **grant admin**:
 
-```bash
-docker compose logs -f
-```
+   ```sql
+   UPDATE `User` SET isAdmin = 1 WHERE email = 'YourEmail@example.com';
+   UPDATE `User` SET verified = 1 WHERE email = 'YourEmail@example.com';
+   ```
 
----
-
-### Step 3 — Register in the web UI and grant admin + verification in MySQL
-
-1. Open the panel:
-
-   * `http://<ip>:3001`
-
-2. Register a user account via the UI.
-
-3. Then in MySQL, locate the `User` table and mark your account as **admin** and **verified**:
-
-```sql
-UPDATE `User` SET isAdmin = 1 WHERE email = 'YourEmail@example.com';
-UPDATE `User` SET verified = 1 WHERE email = 'YourEmail@example.com';
-```
-
-Now you can log in to the panel with full privileges.
-
----
+3. Now you can sign in to the panel.
 
 ### Step 4 — Add the local Yanix Server in Admin Zone
 
-1. Click the **menu icon** in the **top-right**
-2. Go to the **Admin zone**
-3. Open **Yanix Servers**
-4. Add a record with:
+1. Click the menu icon in the top-right corner and open the **Admin Zone**
+2. Find the **Yanix Servers** section and add a server with these values:
 
 * `hostLabel`: `A`
 * `ip`: `yanix-api`
-* `http`: `http://yanix-api:8080`
+* URL: `http://yanix-api:8080`
 
-Click **Add**.
+3. Click **Add**
 
----
+### Step 5 — Finished
 
-### Step 5 — Done
+Installation is complete. Using the admin panel you can:
 
-Installation is complete.
+* create containers
+* verify users
+* manage registered Yanix Servers
 
-From the admin panel, you can:
+## How to add a container
 
-* Create/manage containers (depending on your deployment model)
-* Verify users
-* Operate connected Yanix servers
+### Option 1 — Add Yanix labels to your Docker Compose service
 
----
-
-## Adding a Container (Label-Based Discovery)
-
-Yanix discovers/manages containers using Docker labels.
-
-### Option 1 — Add labels to your `docker compose`
-
-Add **two labels** to a service:
-
-* `com.yanix.role: "yanix-server"` **must not be changed**
-* `com.yanix.server_id: "<id>"` should usually match the container name (recommended)
-
-<details>
-  <summary><strong>Example docker-compose service (click to expand)</strong></summary>
+Add **two labels** to any container. Example:
 
 ```yaml
 services:
@@ -168,4 +106,13 @@ services:
     restart: unless-stopped
 ```
 
-</details>
+**Notes**
+
+* Do **not** edit this label:
+
+  * `com.yanix.role: "yanix-server"`
+* Recommendation:
+
+  * Always set `com.yanix.server_id` to your container name (example: `"testcounter"`)
+
+Start the container, and it should appear in the Yanix web panel.
