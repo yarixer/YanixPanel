@@ -76,6 +76,7 @@
 * URL: `http://yanix-api:8080`
 
 3. Click **Add**
+![Yanix Panel](./.github/adminpanel.png)
 
 ### Step 5 — Installation is complete.
 
