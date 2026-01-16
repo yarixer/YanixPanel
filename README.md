@@ -14,6 +14,15 @@ It lets you manage containers on the local host or on remote servers, and includ
 
 * `docker exec -it <container>`
 
+<details>
+  <summary><strong>Screenshots</strong></summary>
+
+  ![Screenshot 1](./example/screenshots/s1.png)
+  ![Screenshot 2](./example/screenshots/s2.png)
+  ![Screenshot 3](./example/screenshots/s3.png)
+  ![Screenshot 4](./example/screenshots/s4.png)
+
+</details>
 
 
 ## Requirements
