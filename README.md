@@ -1,13 +1,11 @@
 ![Yanix Panel](./header.png)
-Yanix is a self-hosted web control panel for managing Docker containers from a browser.  
-It can manage containers on multiple hosts.
 
 ## Requirements
 
 - **Docker Engine v27+** (cgroup v2 required)
 - **OS:** Debian / Ubuntu
 - **MySQL 8.0+**
-- `acl` package (`apt-get install acl`)
+- **acl** package (`apt-get install acl`)
 - Basic Docker knowledge
 
 ## Installation
@@ -20,7 +18,7 @@ It can manage containers on multiple hosts.
 2. Create a **database**
 3. Create a **MySQL user** with **full privileges** on that database  
    (save the database name, username, and password — you will need them)
-4. Install `acl` if not installed:
+4. Install `acl` if not installed
 
    ```bash
    sudo apt-get install -y acl
@@ -68,9 +66,9 @@ It can manage containers on multiple hosts.
 
 3. Now you can sign in to the panel.
 
-### Step 4 — Add the local Yanix Server in Admin Zone
+### Step 4 — Add the host in Admin Zone
 
-1. Click the menu icon in the top-right corner and open the **Admin Zone**
+1. Click the menu icon in the top-right corner and click **Admin**
 2. Find the **Yanix Servers** section and add a server with these values:
 
 * `hostLabel`: `A`
@@ -79,13 +77,9 @@ It can manage containers on multiple hosts.
 
 3. Click **Add**
 
-### Step 5 — Finished
+### Step 5 — Installation is complete.
 
-Installation is complete. Using the admin panel you can:
-
-* create containers using templates
-* verify users
-* make containers private (admins visible only)
+Note: Now you can verify users using the admin panel
 
 ## How to add a container
 
@@ -108,12 +102,9 @@ services:
 
 **Notes**
 
-* Do **not** edit this label:
+* Do **not** edit `com.yanix.role: "yanix-server"` label
+* Recommendation: Always set `com.yanix.server_id` to your container name (example: `"testcounter"`)
 
-  * `com.yanix.role: "yanix-server"`
-* Recommendation:
-
-  * Always set `com.yanix.server_id` to your container name (example: `"testcounter"`)
 
 Start the container, and it should appear in the Yanix web panel.
 
