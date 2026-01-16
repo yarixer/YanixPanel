@@ -1,10 +1,10 @@
 services:
-  app:
+  yanix-website:
     image: yanix-website:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: yanix-app
+    container_name: yanix-website
     network_mode: host
     environment:
       NODE_ENV: production

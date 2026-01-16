@@ -86,6 +86,9 @@
 
   let activeTab: 'console' | 'files' | 'info' = 'console';
 
+  let containerPollTimer: ReturnType<typeof setInterval> | null = null;
+  let containerPollInFlight = false;
+
   let logs: string[] = [];
   let command = '';
   let actionLoading: 'start' | 'stop' | 'restart' | null = null;
@@ -373,8 +376,15 @@
       })
       .catch(() => {});
 
-    init().then(() => {
-      if (!cancelled) setupLogsSse();
+    init().then(async () => {
+      if (cancelled) return;
+
+      setupLogsSse();
+      await refreshContainerSnapshot();
+      
+      containerPollTimer = setInterval(() => {
+        refreshContainerSnapshot();
+      }, 5000);
     });
 
     return () => {
@@ -384,6 +394,8 @@
         logSource = null;
       }
       if (toastTimer) clearInterval(toastTimer);
+      if (containerPollTimer) clearInterval(containerPollTimer);
+      containerPollTimer = null;
     };
   });
 
@@ -424,16 +436,46 @@
         container = { ...container, containerState: data.containerState };
       }
 
-      logs = [...logs, `[action] ${action} → ${data.containerState ?? 'ok'}`].slice(-MAX_LOG_LINES);
-    } catch (e: any) {
-      const msg = e?.message ?? 'Network error';
-      pushToast(msg, 'error');
-      logs = [...logs, `[error] ${msg}`].slice(-MAX_LOG_LINES);
-    } finally {
-      actionLoading = null;
+        logs = [...logs, `[action] ${action} → ${data.containerState ?? 'ok'}`].slice(-MAX_LOG_LINES);
+      } catch (e: any) {
+        const msg = e?.message ?? 'Network error';
+        pushToast(msg, 'error');
+        logs = [...logs, `[error] ${msg}`].slice(-MAX_LOG_LINES);
+      } finally {
+        actionLoading = null;
+      }
     }
-  }
+  
+    async function refreshContainerSnapshot() {
+      if (containerPollInFlight) return;
+      containerPollInFlight = true;
 
+      try {
+        const res = await fetch(
+          `/api/servers/${encodeURIComponent(hostLabel)}/${encodeURIComponent(dockerId)}`,
+          { credentials: 'include' }
+        );
+
+        if (res.status === 401 || res.status === 403) {
+          await goto('/auth/login');
+          return;
+        }
+
+        if (!res.ok) return;
+
+        const data = await res.json().catch(() => null);
+        if (data?.container) {
+          // Обновляем полностью, чтобы обновлялись и CPU/MEM/State/Port и т.д.
+          container = data.container;
+        }
+      } catch {
+        // молча, чтобы не спамить UI
+      } finally {
+        containerPollInFlight = false;
+      }
+    }
+
+  
   async function sendCommand() {
     const cmd = command.trim();
     if (!cmd || !container) return;
