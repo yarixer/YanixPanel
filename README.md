@@ -106,7 +106,7 @@ services:
 * Recommendation: Always set `com.yanix.server_id` to your container name (example: `"testcounter"`)
 
 
-Start the container, and it should appear in the Yanix web panel.
+Start the container, and it should appear in the Yanix Panel.
 
 ### Option 2 - create templates
 
