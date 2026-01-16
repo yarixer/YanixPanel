@@ -1,3 +1,4 @@
+![Yanix Panel](./header.png)
 Yanix is a self-hosted web control panel for managing Docker containers from a browser.  
 It can manage containers on the same host **and** on other servers by registering remote “Yanix Servers” in the admin area.
 
