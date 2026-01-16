@@ -1,6 +1,6 @@
 ![Yanix Panel](./header.png)
 Yanix is a self-hosted web control panel for managing Docker containers from a browser.  
-It can manage containers on the same host **and** on other servers by registering remote “Yanix Servers” in the admin area.
+It can manage containers on multiple hosts.
 
 ## Requirements
 
@@ -23,7 +23,6 @@ It can manage containers on the same host **and** on other servers by registerin
 4. Install `acl` if not installed:
 
    ```bash
-   sudo apt-get update
    sudo apt-get install -y acl
    ```
 
@@ -84,9 +83,9 @@ It can manage containers on the same host **and** on other servers by registerin
 
 Installation is complete. Using the admin panel you can:
 
-* create containers
+* create containers using templates
 * verify users
-* manage registered Yanix Servers
+* make containers private (admins visible only)
 
 ## How to add a container
 
@@ -117,3 +116,7 @@ services:
   * Always set `com.yanix.server_id` to your container name (example: `"testcounter"`)
 
 Start the container, and it should appear in the Yanix web panel.
+
+### Option 2 - create templates
+
+Soon...
