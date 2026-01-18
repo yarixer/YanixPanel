@@ -20,7 +20,7 @@ It lets you manage containers on the local host or on remote servers, and includ
   ![Screenshot 1](./.github/s1.png)
   ![Screenshot 2](./.github/s2.png)
   ![Screenshot 3](./.github/s3.png)
-  ![Screenshot 4](./.github/LoggingScheme.png)
+  ![Screenshot 4](./.github/s4.png)
 
 </details>
 
