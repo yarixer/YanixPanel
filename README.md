@@ -29,7 +29,7 @@ It lets you manage containers on the local host or on remote servers, and includ
 
   <p>
     <a href="https://vector.dev/" target="_blank" rel="noopener noreferrer"><strong>Vector.dev</strong></a>
-    is the primary component responsible for log transportation between servers.
+    is the primary component responsible for log transportation between servers and is deployed on each server as a Docker container.
   </p>
 
   ![Screenshot 1](./.github/LoggingScheme.png)
