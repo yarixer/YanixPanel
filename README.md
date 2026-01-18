@@ -27,7 +27,7 @@ It lets you manage containers on the local host or on remote servers, and includ
 <details>
   <summary><strong>Log Shipping Topology</strong></summary>
 
-  ![Screenshot 1](./example/screenshots/s1.png)
+  ![Screenshot 1](./.github/screenshots/LoggingScheme.png)
 
 </details>
 
