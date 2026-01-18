@@ -27,9 +27,15 @@ It lets you manage containers on the local host or on remote servers, and includ
 <details>
   <summary><strong>Log Shipping Topology</strong></summary>
 
+  <p>
+    <a href="https://vector.dev/" target="_blank" rel="noopener noreferrer"><strong>Vector.dev</strong></a>
+    is the primary component responsible for log transportation between servers.
+  </p>
+
   ![Screenshot 1](./.github/LoggingScheme.png)
 
 </details>
+
 
 
 ## Requirements
