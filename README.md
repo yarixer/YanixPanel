@@ -17,10 +17,17 @@ It lets you manage containers on the local host or on remote servers, and includ
 <details>
   <summary><strong>Screenshots</strong></summary>
 
+  ![Screenshot 1](./.github/screenshots/s1.png)
+  ![Screenshot 2](./.github/screenshots/s2.png)
+  ![Screenshot 3](./.github/screenshots/s3.png)
+  ![Screenshot 4](./.github/screenshots/LoggingScheme.png)
+
+</details>
+
+<details>
+  <summary><strong>Log Shipping Topology</strong></summary>
+
   ![Screenshot 1](./example/screenshots/s1.png)
-  ![Screenshot 2](./example/screenshots/s2.png)
-  ![Screenshot 3](./example/screenshots/s3.png)
-  ![Screenshot 4](./example/screenshots/s4.png)
 
 </details>
 
