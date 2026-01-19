@@ -120,6 +120,8 @@ It lets you manage containers on the local host or on remote servers, and includ
 
 Note: Now you can verify users using the admin panel
 
+---
+
 ## How to add a container
 
 ### Option 1 — Add Yanix labels to your Docker Compose service
@@ -273,7 +275,6 @@ You make templates reusable by putting placeholders in them (for example `{{PORT
 
 * `{{SERVER_ID}}` — always substituted automatically with the container name you choose in the UI.
 
----
 
 <details>
   <summary><strong>Example</strong></summary>
@@ -347,3 +348,127 @@ services:
 ![Screenshot 1](./.github/wireguardscr.png)
 
 </details>
+
+---
+
+## Sending commands
+
+### How it works
+
+When you run a command in the panel, Yanix sends it to the **Docker API**, and Docker forwards it into the container (similar to `docker exec`).
+
+Important detail: Docker does **not** receive your command as one full string. It receives an **array of arguments** (`["cmd", "arg1", "arg2", ...]`).
+So your command must be **split into correct tokens** (arguments). If you split it incorrectly, Docker will execute something different from what you intended.
+
+### Preparation
+
+Take any `docker exec` command **without** `-i`.
+
+### General steps
+
+1. Remove `docker exec <container>` — the panel adds this part automatically.
+2. Split the remaining command into:
+
+   * **Stable part** (always the same)
+   * **User input part** (changes depending on what you type)
+3. Replace the user input part with `{{INPUT}}` (or `{{INPUT_ARGS}}`, see note below).
+4. Convert the stable part into an argument array.
+
+
+
+<details>
+  <summary><strong>Example 1 — rcon-cli</strong></summary>
+
+**Original command:**
+
+```bash
+docker exec container1 rcon-cli -a 127.0.0.1:7777 -p password 'servermsg "8 min"'
+```
+
+**Step 1 — Remove `docker exec container1`:**
+Panel will add it automatically.
+
+Remaining:
+
+```bash
+rcon-cli -a 127.0.0.1:7777 -p password 'servermsg "8 min"'
+```
+
+**Step 2 — Stable part (does not change):**
+
+```bash
+rcon-cli -a 127.0.0.1:7777 -p password
+```
+
+**Step 3 — User input part (changes):**
+
+```bash
+'servermsg "8 min"'
+```
+
+**Step 4 — Replace user input with `{{INPUT}}` and split stable part into tokens**
+
+**Result:**
+
+```json
+["rcon-cli", "-a", "127.0.0.1:7777", "-p", "CHANGEME", "{{INPUT}}"]
+```
+
+</details>
+
+
+
+<details>
+  <summary><strong>Example 2 — sh -lc</strong></summary>
+
+**Original command:**
+
+```bash
+docker exec container2 sh -lc 'echo "hello from sh" >> /proc/1/fd/1 2>&1'
+```
+
+**Step 1 — Remove `docker exec container2`:**
+
+Remaining:
+
+```bash
+sh -lc 'echo "hello from sh" >> /proc/1/fd/1 2>&1'
+```
+
+**Step 2 — Stable part:**
+
+```bash
+sh -lc
+```
+
+**Step 3 — User input part:**
+
+```bash
+'echo "hello from sh" >> /proc/1/fd/1 2>&1'
+```
+
+**Step 4 — Replace user input with `{{INPUT}}` and split stable part**
+
+**Result:**
+
+```json
+["sh", "-lc", "{{INPUT}}"]
+```
+
+</details>
+
+
+
+5. Open **Admin → Command Patterns**:
+   * Create a new pattern and paste your JSON array (like in examples above).
+   * On the same page (below), add the container’s **dockerId** and select the created pattern.
+   *  Done.
+
+
+
+### Note: `{{INPUT}}` vs `{{INPUT_ARGS}}`
+
+If a pattern does not work as expected, try replacing `{{INPUT}}` with `{{INPUT_ARGS}}`.
+
+* `{{INPUT}}` inserts your input as a single argument (best when the tool expects one “payload string”).
+* `{{INPUT_ARGS}}` applies shell-like argument splitting, which can help when your input contains multiple flags/args.
