@@ -473,6 +473,8 @@ If a pattern does not work as expected, try replacing `{{INPUT}}` with `{{INPUT_
 * `{{INPUT}}` inserts your input as a single argument (best when the tool expects one “payload string”).
 * `{{INPUT_ARGS}}` applies shell-like argument splitting, which can help when your input contains multiple flags/args.
 
+---
+
 ## Enable HTTPS
 
 1. Open:
@@ -485,8 +487,8 @@ sudo nano /var/yanix/core/docker-compose.yml
 
 ```yaml
 environment:
-  COOKIE_SECURE: "true"        # enable if you use HTTPS
-  TRUST_PROXY_IP: "172.xx.yy.1" # set if you terminate TLS in a reverse proxy
+  COOKIE_SECURE: "true"        # HTTPS
+  TRUST_PROXY_IP: "172.xx.yy.1" # proxy
 ```
 
 3. See the example reverse proxy config in:
