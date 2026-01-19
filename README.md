@@ -207,6 +207,7 @@ environment:
   - SHOW=true
   - USER_INPUT
 ```
+> See: https://docs.docker.com/reference/compose-file/services/#environment
 
 #### Rule 2 — Supported vs not supported
 
