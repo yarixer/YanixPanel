@@ -499,4 +499,4 @@ environment:
 
 ## Multi-server support
 
-Multi-server support is already implemented. A step-by-step setup guide is in progress and will be added to the README soon!!!
+Multi-server support is already implemented. A step-by-step setup guide is in progress and will be added to the README later.
