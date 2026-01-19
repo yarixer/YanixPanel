@@ -494,10 +494,8 @@ environment:
 3. See the example reverse proxy config in:
 
 * `/example/nginx` (github)
+4. The remaining steps depend on your proxy/cert setup.
 
 ## Multi-server support
 
 Multi-server support is already implemented. A step-by-step setup guide is in progress and will be added to the README soon!!!
-
-
-4. The remaining steps depend on your proxy/cert setup.
