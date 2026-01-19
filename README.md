@@ -210,17 +210,64 @@ environment:
 
 **Not supported:**
 
-* `build` (and anything under it: `context`, `dockerfile`, build args, etc.)
+* `build`
+* `depends_on`
+* `networks:`
+* `volumes:`
+* privileged
+* pid, ipc, uts, cgroup
+* dns, dns_search
+* runtime
+* stop_grace_period, stop_signal
+* x-... extensions
+* extends
+* links
+* profiles
+* deploy
 
 **Supported (examples):**
 
-* `image`
-* `container_name`
-* common runtime fields (`environment`, `ports`, `volumes`, `restart`, etc.)
+<details>
+  <summary><strong>A lot</strong></summary>
+
+  <ul>
+    <li><code>image</code></li>
+    <li><code>container_name(will be ignored)</code></li>
+    <li><code>tty</code></li>
+    <li><code>stdin_open</code></li>
+    <li><code>ports</code></li>
+    <li><code>environment</code></li>
+    <li><code>env_file</code> (not sure)</li>
+    <li><code>volumes</code></li>
+    <li><code>volumes_from</code></li>
+    <li><code>command</code></li>
+    <li><code>entrypoint</code></li>
+    <li><code>restart</code></li>
+    <li><code>user</code></li>
+    <li><code>working_dir</code></li>
+    <li><code>extra_hosts</code></li>
+    <li><code>logging</code></li>
+    <li><code>healthcheck</code></li>
+    <li><code>labels</code></li>
+    <li><code>read_only</code></li>
+    <li><code>devices</code></li>
+    <li><code>cap_add, cap_drop</code></li>
+    <li><code>security_opt</code></li>
+    <li><code>ulimits</code></li>
+    <li><code>sysctls</code></li>
+    <li><code>network_mode</code></li>
+    <li><code>networks</code></li>
+    <li><code>network_mode</code></li>
+    <li><code>cpus, cpu_shares, mem_limit, mem_reservation</code></li>
+  </ul>
+
+</details>
+
 
 #### Rule 3 — Placeholders
 
-You can parameterize templates with placeholders like `{{PORT1}}`, `{{RAMlimit}}`, etc. Yanix will prompt for these values in **Create container** and substitute them at creation time.
+You make templates reusable by putting placeholders in them (for example `{{PORT1}}`, `{{RAMlimit}}`, etc.). When you create a container in **Create container**, Yanix Panel will ask you to enter values for these placeholders and will automatically replace them in the template before starting the container.
+
 
 **Unique placeholder:**
 
