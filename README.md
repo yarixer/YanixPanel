@@ -147,6 +147,156 @@ services:
 
 Start the container, and it should appear in the Yanix Panel.
 
-### Option 2 - create templates
+---
 
-Soon...
+### Option 2 — Create containers from templates
+
+Templates are Docker Compose snippets stored on the host and rendered by Yanix when you use **Admin → Create container**.
+
+#### 0) Prepare a single-service Compose file
+
+Create (or reuse) a `docker-compose.yml` that contains **exactly one** container under `services:`. Multi-service templates are not supported.
+
+#### 1) Create a template file
+
+Open the templates directory and create any `.yml` file, for example `test1.yml`:
+
+```bash
+cd /var/yanix/template/
+sudo nano test1.yml
+```
+
+#### 2) Copy your Compose content into the template
+
+#### 3) Edit the template using the rules below, then save
+
+Make sure the template follows the **Template Rules** (array syntax, supported fields, placeholders).
+
+#### 4) Create the container in the Admin panel
+
+Open the admin panel, go to **Create container**, select your template, and fill the form (including any placeholders).
+
+#### 5) Done
+
+---
+
+### Template Rules
+
+#### Rule 1 — Use array syntax wherever Docker Compose allows it
+
+Some Docker Compose fields support **two syntaxes**: *map* and *array*.
+In Yanix templates, use the **array** syntax **whenever Docker Compose allows it**.
+Only use map syntax where array syntax is not allowed by Compose.
+
+Map syntax:
+
+```yaml
+environment:
+  RACK_ENV: development
+  SHOW: "true"
+  USER_INPUT:
+```
+
+Array syntax (preferred):
+
+```yaml
+environment:
+  - RACK_ENV=development
+  - SHOW=true
+  - USER_INPUT
+```
+
+#### Rule 2 — Supported vs not supported
+
+**Not supported:**
+
+* `build` (and anything under it: `context`, `dockerfile`, build args, etc.)
+
+**Supported (examples):**
+
+* `image`
+* `container_name`
+* common runtime fields (`environment`, `ports`, `volumes`, `restart`, etc.)
+
+#### Rule 3 — Placeholders
+
+You can parameterize templates with placeholders like `{{PORT1}}`, `{{RAMlimit}}`, etc. Yanix will prompt for these values in **Create container** and substitute them at creation time.
+
+**Unique placeholder:**
+
+* `{{SERVER_ID}}` — always substituted automatically with the container name you choose in the UI.
+
+---
+
+<details>
+  <summary><strong>Example</strong></summary>
+
+WireGuard already uses array syntax for `environment`, so it mostly needs placeholders.
+
+**Before:**
+
+```yaml
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - SERVERURL=wireguard.domain.com #optional
+      - SERVERPORT=51820 #optional
+      - PEERS=1 #optional
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - PERSISTENTKEEPALIVE_PEERS= #optional
+      - LOG_CONFS=true #optional
+    volumes:
+      - /path/to/wireguard/config:/config
+      - /lib/modules:/lib/modules #optional
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+```
+
+**After (template):**
+
+```yaml
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - SERVERURL=wireguard.domain.com
+      - SERVERPORT={{SERVERPORT}}
+      - PEERS=1
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+      - ALLOWEDIPS=0.0.0.0/0
+      - PERSISTENTKEEPALIVE_PEERS=
+      - LOG_CONFS={{LOG_CONFS}}
+    volumes:
+      - /var/yanix/container/{{SERVER_ID}}/wireguard-config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - {{ports}}
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+```
+**Screenshot**
+![Screenshot 1](./.github/wireguardscr.png)
+
+</details>
