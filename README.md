@@ -151,7 +151,7 @@ Start the container, and it should appear in the Yanix Panel.
 
 ### Option 2 — Create containers from templates
 
-Templates are Docker Compose snippets stored on the host and rendered by Yanix when you use **Admin → Create container**.
+Templates are Docker Compose snippets stored on the host and rendered by Yanix when you use **Admin → Create container**. 
 
 #### 0) Prepare a single-service Compose file
 
@@ -174,7 +174,7 @@ Make sure the template follows the **Template Rules** (array syntax, supported f
 
 #### 4) Create the container in the Admin panel
 
-Open the admin panel, go to **Create container**, select your template, and fill the form (including any placeholders).
+Open the admin panel, go to **Create container**, select your template, and fill the form (including any placeholders). `SERVER_ID` is the name of the container.
 
 #### 5) Done
 
