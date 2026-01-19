@@ -212,18 +212,18 @@ environment:
 
 * `build`
 * `depends_on`
-* `networks:`
-* `volumes:`
-* privileged
-* pid, ipc, uts, cgroup
-* dns, dns_search
-* runtime
-* stop_grace_period, stop_signal
-* x-... extensions
-* extends
-* links
-* profiles
-* deploy
+* networks:
+* volumes:
+* `privileged`
+* `pid, ipc, uts, cgroup`
+* `dns, dns_search`
+* `runtime`
+* `stop_grace_period, stop_signal`
+* `x-... extensions`
+* `extends`
+* `links`
+* `profiles`
+* `deploy`
 
 **Supported (examples):**
 
