@@ -232,7 +232,7 @@ environment:
 
   <ul>
     <li><code>image</code></li>
-    <li><code>container_name(will be ignored)</code></li>
+    <li><code>container_name (will be ignored)</code></li>
     <li><code>tty</code></li>
     <li><code>stdin_open</code></li>
     <li><code>ports</code></li>
