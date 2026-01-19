@@ -32,7 +32,7 @@ It lets you manage containers on the local host or on remote servers, and includ
     is the primary component responsible for log transportation between servers and is deployed on each server as a Docker container.
   </p>
 
-  ![Screenshot 1](./.github/LoggingScheme.png)
+  ![Screenshot 5](./.github/LoggingScheme.png)
 
 </details>
 
